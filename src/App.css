@@ -1,38 +1,101 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #2e2a4f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
+  background-color: #F5F5F5;
+  height: 500px;
+  width: 450px;
+  margin-top: 100px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  margin-top: 50px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+p {
+  margin: 10px 50px;
+  text-align: center;
+}
+
+.dice-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px 20px;
+}
+
+.dice-button {
+  height: 40px;
+  width: 40px;
+  background-color: #fffffe;
+  color: black;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 2px 2px #999;
+  display: inline-block;
+  padding: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  margin: 20px;
+}
+
+.dice-button:active {
+  background-color: fffffe;
+  box-shadow: 3 5px gray;
+  transform: translateY(1px);
+}
+
+.roll-button {
+  margin: 10px auto;
+  height: 35px;
+  width: 80px;
+  background-color: #624ede;
+  box-shadow: 1px 1px #999;
+  color: #F5F5F5;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.roll-button:active {
+  background-color: fffffe;
+  box-shadow: 3 5px gray;
+  transform: translateY(0.5px);
+}
+
+.change-mode-button {
+  margin: 20px auto;
+  height: 35px;
+  width: 120px;
+  background-color: #624ede;
+  box-shadow: 1px 1px #999;
+  color: #F5F5F5;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.change-mode-button:active {
+  background-color: fffffe;
+  box-shadow: 3 5px gray;
+  transform: translateY(0.5px);
 }
