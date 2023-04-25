@@ -15,7 +15,7 @@ body {
 
 .container {
   background-color: #F5F5F5;
-  height: 500px;
+  height: 400px;
   width: 450px;
   margin-top: 100px;
   border-radius: 10px;
@@ -56,6 +56,23 @@ p {
   margin: 20px;
 }
 
+.dice-button-locked {
+  height: 40px;
+  width: 40px;
+  background-color: #2aff00;
+  color: black;
+  border: none;
+  border-radius: 7px;
+  box-shadow: 2px 2px #999;
+  display: inline-block;
+  padding: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  margin: 20px;
+}
+
 .dice-button:active {
   background-color: fffffe;
   box-shadow: 3 5px gray;
@@ -65,7 +82,7 @@ p {
 .roll-button {
   margin: 10px auto;
   height: 35px;
-  width: 80px;
+  width: 100px;
   background-color: #624ede;
   box-shadow: 1px 1px #999;
   color: #F5F5F5;
@@ -81,21 +98,4 @@ p {
   transform: translateY(0.5px);
 }
 
-.change-mode-button {
-  margin: 20px auto;
-  height: 35px;
-  width: 120px;
-  background-color: #624ede;
-  box-shadow: 1px 1px #999;
-  color: #F5F5F5;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
 
-.change-mode-button:active {
-  background-color: fffffe;
-  box-shadow: 3 5px gray;
-  transform: translateY(0.5px);
-}

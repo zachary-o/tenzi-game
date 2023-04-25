@@ -1,24 +1,77 @@
+import { useEffect, useState } from "react";
+import Confetti from "react-confetti";
 
-import { useState } from 'react';
-
-import './App.css';
+import "./App.css";
 
 function App() {
+  const createArrOfObj = () => {
+    let dicesArray = [];
+    for (let i = 0; i < 10; i++) {
+      dicesArray.push({
+        id: i + 1,
+        number: Math.ceil(Math.random() * 6),
+        isLocked: false,
+      });
+    }
+    return dicesArray;
+  };
 
-const [number, setNumber] = useState(1)
+  const [dices, setDices] = useState(createArrOfObj());
+  const [isWin, setIsWin] = useState(false);
 
-const diceButtons = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const onClickLockDice = (diceId) => {
+    setDices((prevDice) => {
+      return prevDice.map((dice) => {
+        if (dice.id === diceId) {
+          return {
+            ...dice,
+            isLocked: !dice.isLocked,
+          };
+        } else {
+          return dice;
+        }
+      });
+    });
+  };
 
+  const onCLickRoll = () => {
+    setDices((prevDice) => {
+      return prevDice.map((dice) => {
+        if (dice.isLocked) {
+          return dice;
+        } else {
+          return {
+            ...dice,
+            number: Math.ceil(Math.random() * 6),
+          };
+        }
+      });
+    });
+  };
 
-const getRandomNum = (min, max) => {
-  let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-;
-  setNumber(randomNum);
-  console.log(number);
-}
+  useEffect(() => {
+    const lockedDice = dices.every((dice) => {
+      return dice.isLocked === true;
+    });
+
+    const allNumbersSame = dices.every((dice) => {
+      return dice.number === dices[0].number;
+    });
+
+    if (allNumbersSame && lockedDice) {
+      setIsWin(true);
+      console.log("you won");
+    }
+  }, [dices]);
+
+  const startNewGame = () => {
+    setIsWin(false);
+    setDices(createArrOfObj());
+  };
 
   return (
     <div className="App">
+      {isWin && <Confetti />}
       <div className="container">
         <h1>Tenzies</h1>
         <p>
@@ -26,18 +79,22 @@ const getRandomNum = (min, max) => {
           current value between rolls.
         </p>
         <div className="dice-buttons">
-          {diceButtons.map((diceButton, index) => {
-            return (
-              <button key={index} className="dice-button">
-                {number}
-              </button>
-            );
-          })}
+          {dices.map((dice) => (
+            <button
+              key={dice.id}
+              className={dice.isLocked ? "dice-button-locked" : "dice-button"}
+              onClick={() => onClickLockDice(dice.id)}
+            >
+              {dice.number}
+            </button>
+          ))}
         </div>
-        <button className="roll-button" onClick={() => getRandomNum(1, 6)}>
-          Roll
+        <button
+          className="roll-button"
+          onClick={isWin ? startNewGame : onCLickRoll}
+        >
+          {isWin ? "New Game" : "Roll"}
         </button>
-        <button className="change-mode-button">Change Mode</button>
       </div>
     </div>
   );
