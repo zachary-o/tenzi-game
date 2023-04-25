@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Confetti from "react-confetti";
 
 import "./App.css";
@@ -18,6 +18,43 @@ function App() {
 
   const [dices, setDices] = useState(createArrOfObj());
   const [isWin, setIsWin] = useState(false);
+  const [step, setStep] = useState(0);
+  const [time, setTime] = useState({ ms: 0, s: 0, m: 0 });
+  const [interv, setInterv] = useState();
+
+  useEffect(() => {
+    setStep(step + 1);
+  }, []);
+
+  const startTimer = () => {
+    run();
+    setInterv(setInterval(run, 10));
+  };
+
+  let updatedMs = time.ms;
+  let updatedS = time.s;
+  let updatedM = time.m;
+
+  const run = () => {
+    if (updatedS === 60) {
+      updatedM++;
+      updatedS = 0;
+    }
+    if (updatedMs === 100) {
+      updatedS++;
+      updatedMs = 0;
+    }
+    updatedMs++;
+    return setTime({ ms: updatedMs, s: updatedS, m: updatedM });
+  };
+
+  const stopTimer = () => {
+    clearInterval(interv);
+  };
+
+  const resetTimer = () => {
+    setTime({ ms: 0, s: 0, m: 0 });
+  };
 
   const onClickLockDice = (diceId) => {
     setDices((prevDice) => {
@@ -32,6 +69,11 @@ function App() {
         }
       });
     });
+
+    if (time.ms === 0 && time.s === 0 && time.m === 0) {
+      startTimer();
+    }
+    return;
   };
 
   const onCLickRoll = () => {
@@ -47,6 +89,13 @@ function App() {
         }
       });
     });
+    setStep(step + 1);
+    console.log(step);
+
+    if (time.ms === 0 && time.s === 0 && time.m === 0) {
+      startTimer();
+    }
+    return;
   };
 
   useEffect(() => {
@@ -60,13 +109,15 @@ function App() {
 
     if (allNumbersSame && lockedDice) {
       setIsWin(true);
-      console.log("you won");
+      stopTimer();
     }
   }, [dices]);
 
   const startNewGame = () => {
     setIsWin(false);
     setDices(createArrOfObj());
+    setStep(1);
+    resetTimer();
   };
 
   return (
@@ -78,6 +129,21 @@ function App() {
           Roll until all dices are the same. Click each dice to freeze it at its
           current value between rolls.
         </p>
+        {isWin ? (
+          <p>
+            Your time is {time.m}:{time.s},{time.ms}. <br />
+            It took you {step - 1} steps to win.
+          </p>
+        ) : (
+          <div className="timer-container">
+            <span>Time: </span>
+            <p>
+              {time.m >= 10 ? time.m : "0" + time.m} :{" "}
+              {time.s >= 10 ? time.s : "0" + time.s} :{" "}
+              {time.ms >= 10 ? time.ms : "0" + time.ms}
+            </p>
+          </div>
+        )}
         <div className="dice-buttons">
           {dices.map((dice) => (
             <button
